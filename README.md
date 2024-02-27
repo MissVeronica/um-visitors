@@ -24,7 +24,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 6. Last login by UM: _um_last_login
 
 ## UM Dashboard
-
+1. Statistic metabox
 
 ## WP All Users
 
