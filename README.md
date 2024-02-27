@@ -3,7 +3,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 
 ## UM Settings -> Extensions -> User Visitors & Visits
 1. User Roles - Select the User Roles for display of the Visits & Visitors forms in User Profiles.
-2. Time limit new entries - Visitor time limit for new visit entries to be saved. Select a number in minutes/hours. During this time period duplicate visits are not saved as a new visit. Disable time limit, set time to 0
+2. Time limit new entries - Visitor time limit for new visit entries to be saved. Select a number in minutes/hours ( 5 minutes to 24 hours ). During this time period duplicate visits are not saved as a new visit. Disable time limit, set time to 0
 3. Visitors - Member Directory Form - Create a Member Directory Form for display of User Profile Visitors.
 4. Visits - Member Directory Form - Create a Member Directory Form for display of User Profile Visits.
 5. Display days ago in Members Directory - If not selected WP date format will be used.
