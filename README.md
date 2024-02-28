@@ -20,12 +20,13 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. Last activity: vv_last_activity
 2. Last logout: vv_last_logout
 3. Last update: vv_last_update
-4. Number of visits: vv_visits_counter
-5. Number of visitors: vv_visitors_counter
-6. Last login by UM: _um_last_login
+4. Last login by UM: _um_last_login
 
 ## UM Dashboard
 1. Statistic metabox
+
+## Shortcodes
+1. [vv_show_activity] Display of last user activity in human format.
 
 ## WP All Users
 1. Sortable columns for the Plugin's UM Predfined fields 
