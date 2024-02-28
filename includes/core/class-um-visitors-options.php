@@ -5,7 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class Visitors_User_Options{
 
     public $current_time = 0;
-    public $date_format  = '';
+    public $date_format   = 'Y/m/d H:i:s';
+    public $date_local    = '';
 
     function __construct() {
 
@@ -14,7 +15,7 @@ class Visitors_User_Options{
         add_action( 'wp_logout',                      array( $this, 'add_last_logout_timestamp' ), 10, 1 );
         add_action( 'um_user_after_updating_profile', array( $this, 'add_last_update_timestamp' ), 10, 3 );
 
-        $this->date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+        $this->date_local   = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
         $this->current_time = current_time( 'timestamp' );
     }
 
@@ -110,7 +111,7 @@ class Visitors_User_Options{
         $max_users = get_post_meta( $form_id, '_um_max_users', true );
 
         if ( $max_users == '0' ) {
-            $max_users = '';
+            $max_users = $counter;
 
         } else {
             if ( intval( $max_users ) > intval( $counter )) {
@@ -145,7 +146,7 @@ class Visitors_User_Options{
 
     public function format_date( $time ) {
 
-        return date_i18n( 'Y/m/d H:i:s', $time );
+        return date_i18n( $this->date_format, $time );
     }
 
 // 	Add UM filter to add links in the UM profile menu
