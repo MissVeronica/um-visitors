@@ -4,15 +4,18 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Visitors_User{
 
-    public $current_time     = 0;
-    public $date_format      = '';
-    public $user_list_length = 100;
+    public $current_time        = 0;
+    public $date_format         = 'Y/m/d H:i:s';
+    public $date_index          = 'Y/m/d';
+    public $date_local          = '';
+    public $user_list_length    = 100;
+    public $user_counter_length = 30;
 
     function __construct() {
 
         add_action( 'um_before_form', array( $this, 'user_viewing_profile_page' ), 999, 1 );
 
-        $this->date_format  = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+        $this->date_local   = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
         $this->current_time = current_time( 'timestamp' );
     }
 
@@ -73,11 +76,23 @@ class Visitors_User{
     public function update_user_meta_vv_counter( $uid, $type ) {
 
         $vv_counter = um_user( $type );
-        if ( empty( $vv_counter )) {
-            $vv_counter = 0;
+        if ( empty( $vv_counter ) || ! is_array( $vv_counter )) {
+            $vv_counter = array();
         }
 
-        update_user_meta( $uid, $type, ++$vv_counter );
+        $today = date_i18n( $this->date_index, $this->current_time );
+
+        if ( ! isset( $vv_counter[$today] )) {
+            $vv_counter[$today] = 0;
+
+            if ( count( $vv_counter ) > $this->user_counter_length ) {
+                $vv_counter = array_slice( $vv_counter, 0, $this->user_counter_length, true );
+            }
+        }
+
+        $vv_counter[$today]++;
+
+        update_user_meta( $uid, $type, $vv_counter );
     }
 
     //	UM access profile pages
@@ -126,3 +141,4 @@ class Visitors_User{
 }
 
 new Visitors_User();
+
