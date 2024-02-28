@@ -16,7 +16,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 2. Assign these Forms in the Plugin settings.
 3. Select Directory sorting at least 'Visitor times' and 'Visit times'
 
-## UM Predfined fields in Forms Builder:
+## UM Predefined Fields in Forms Builder:
 1. Last activity: vv_last_activity
 2. Last logout: vv_last_logout
 3. Last update: vv_last_update
