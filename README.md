@@ -29,7 +29,8 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. [vv_show_activity] Display of last user activity in human format.
 
 ## WP All Users
-1. Sortable columns for the Plugin's UM Predfined fields 
+1. Sortable columns for the Plugin's UM Predfined fields
+2. Modal links for Visits and Visitors
 
 ## Translations
 1. Textdomain: um-visitors
