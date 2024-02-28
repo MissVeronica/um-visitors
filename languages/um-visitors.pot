@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Member - User Visitors and Visits\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 17:01+0000\n"
+"POT-Creation-Date: 2024-02-28 07:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,106 +16,132 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.4.3\n"
 "X-Domain: um-visitors"
 
-#: includes/core/class-um-visitors-directory.php:227
+#: includes/core/class-um-visitors-directory.php:228
 msgid "%d days ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:214
+#: includes/core/class-um-visitors-directory.php:215
 msgid "%d hours ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:218
+#: includes/core/class-um-visitors-directory.php:219
 msgid "%d minutes ago"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:183
+#: includes/admin/class-visitors-admin.php:235
 msgid "Activate the extension"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:66
-#: includes/admin/class-visitors-admin.php:73
+#: includes/admin/class-visitors-admin.php:82
+#: includes/admin/class-visitors-admin.php:89
 msgid "Active Users %d"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:255
+#: includes/admin/class-visitors-admin.php:307
 msgid "Counters per week"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:228
+#: includes/admin/class-visitors-admin.php:280
 msgid "Create a Member Directory Form for display of User Profile Visitors."
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:241
+#: includes/admin/class-visitors-admin.php:293
 msgid "Create a Member Directory Form for display of User Profile Visits."
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:248
+#: includes/admin/class-visitors-admin.php:300
 msgid "Display days ago in Members Directory"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:263
+#: includes/admin/class-visitors-admin.php:315
 msgid "Enter the number of days/weeks for User counter displays."
 msgstr ""
 
 #. Description of the plugin
 msgid ""
 "Extension to Ultimate Member for the display of User Profile Visitors and "
-"User Profile Visits. This extension can't update many of the visits when the "
-"profile page is cached by web hosting or a WP plugin."
+"User Profile Visits."
 msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/MissVeronica"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:256
+#: includes/admin/class-visitors-admin.php:308
 msgid "If not selected counters will use days."
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:249
+#: includes/admin/class-visitors-admin.php:301
 msgid "If not selected WP date format will be used."
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:52
-#: includes/admin/class-visitors-admin.php:62
+#: includes/admin/class-visitors-admin.php:68
+#: includes/admin/class-visitors-admin.php:78
 msgid "Last 24 hours"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:318
-#: includes/admin/class-visitors-admin.php:321
+#: includes/admin/class-visitors-admin.php:43
+#: includes/admin/class-visitors-admin.php:380
+#: includes/admin/class-visitors-admin.php:383
 msgid "Last activity"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:332
-#: includes/admin/class-visitors-admin.php:335
+#: includes/admin/class-visitors-admin.php:48
+msgid "Last login"
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:44
+#: includes/admin/class-visitors-admin.php:394
+#: includes/admin/class-visitors-admin.php:397
 msgid "Last logout"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:346
-#: includes/admin/class-visitors-admin.php:349
+#: includes/admin/class-visitors-admin.php:45
+#: includes/admin/class-visitors-admin.php:408
+#: includes/admin/class-visitors-admin.php:411
 msgid "Last update"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:57
-#: includes/admin/class-visitors-admin.php:69
+#: includes/visitors-shortcodes.php:19
+#, php-format
+msgid "Last user activity %s ago"
+msgstr ""
+
+#: includes/visitors-shortcodes.php:22
+#, php-format
+msgid "Last user login %s ago"
+msgstr ""
+
+#: includes/visitors-shortcodes.php:20
+#, php-format
+msgid "Last user logout %s ago"
+msgstr ""
+
+#: includes/visitors-shortcodes.php:21
+#, php-format
+msgid "Last user profile update %s ago"
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:73
+#: includes/admin/class-visitors-admin.php:85
 msgid "Last week"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:221
+#: includes/core/class-um-visitors-directory.php:222
 msgid "less than one minute ago"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:64
-#: includes/admin/class-visitors-admin.php:71
+#: includes/admin/class-visitors-admin.php:80
+#: includes/admin/class-visitors-admin.php:87
 msgid "Logins %d"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:65
-#: includes/admin/class-visitors-admin.php:72
+#: includes/admin/class-visitors-admin.php:81
+#: includes/admin/class-visitors-admin.php:88
 msgid "Logouts %d"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:146
+#: includes/admin/class-visitors-admin.php:163
 #, php-format
 msgid "Max ID %s (%s) with %d"
 msgstr ""
@@ -124,66 +150,81 @@ msgstr ""
 msgid "Miss Veronica"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:129
+#: includes/core/class-um-visitors-options.php:130
 #, php-format
 msgid "My last %s of total %d visitors"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:140
+#: includes/core/class-um-visitors-options.php:141
 #, php-format
 msgid "My last %s of total %d visits"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:54
+#: includes/core/class-um-visitors-options.php:55
 msgid "No data for this User"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:50
+#: includes/core/class-um-visitors-options.php:51
 msgid "No Form defined"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:262
+#: includes/admin/class-visitors-admin.php:314
 msgid "Number of counters"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:145
+#: includes/admin/class-visitors-admin.php:162
 msgid "Number of Users %d"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:371
+#: includes/admin/class-visitors-admin.php:47
 msgid "Number of visitors"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:360
+#: includes/admin/class-visitors-admin.php:46
 msgid "Number of visits"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:227
+#: includes/core/class-um-visitors-directory.php:228
 msgid "one day ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:214
+#: includes/core/class-um-visitors-directory.php:215
 msgid "one hour ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:218
+#: includes/core/class-um-visitors-directory.php:219
 msgid "one minute ago"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:67
-#: includes/admin/class-visitors-admin.php:74
+#: includes/admin/class-visitors-admin.php:65
+msgid "Profile Page Viewers"
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:70
+#: includes/admin/class-visitors-admin.php:75
+msgid "Profile Page Viewers %d"
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:83
+#: includes/admin/class-visitors-admin.php:90
 msgid "Profile Updates %d"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:287
+#: includes/admin/class-visitors-admin.php:324
+msgid ""
+"Select the sortable columns for Plugin's UM Predefined fields in WP All "
+"Users page."
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:349
 msgid "Show visitors time"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:305
+#: includes/admin/class-visitors-admin.php:367
 msgid "Show visits time"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:199
+#: includes/admin/class-visitors-admin.php:251
 msgid "Time limit new entries"
 msgstr ""
 
@@ -191,32 +232,32 @@ msgstr ""
 msgid "Ultimate Member - User Visitors and Visits"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:190
+#: includes/admin/class-visitors-admin.php:242
 msgid "User Roles"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:39
-#: includes/admin/class-visitors-admin.php:271
+#: includes/admin/class-visitors-admin.php:55
+#: includes/admin/class-visitors-admin.php:333
 msgid "User Visitors & Visits"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:176
+#: includes/admin/class-visitors-admin.php:228
 msgid "User Visitors Settings"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:113
+#: includes/core/class-um-visitors-directory.php:114
 msgid "Visit"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:157
+#: includes/admin/class-visitors-admin.php:174
 msgid "Visit times"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:118
+#: includes/core/class-um-visitors-directory.php:119
 msgid "Visitor"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:200
+#: includes/admin/class-visitors-admin.php:252
 msgid ""
 "Visitor time limit for new visit entries to be saved.<br />\n"
 "                                                          Select a number in "
@@ -227,46 +268,39 @@ msgid ""
 " set time to 0"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:156
+#: includes/admin/class-visitors-admin.php:173
 msgid "Visitor times"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:164
-#: includes/admin/class-visitors-admin.php:374
+#: includes/core/class-um-visitors-options.php:165
 msgid "Visitors"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:227
+#: includes/admin/class-visitors-admin.php:279
 msgid "Visitors - Member Directory Form"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:49
-msgid "Visitors - Profile Viewers"
-msgstr ""
-
-#: includes/admin/class-visitors-admin.php:54
-#: includes/admin/class-visitors-admin.php:59
-msgid "Visitors - Profile Viewers %d"
-msgstr ""
-
-#: includes/core/class-um-visitors-options.php:174
-#: includes/admin/class-visitors-admin.php:363
+#: includes/core/class-um-visitors-options.php:175
 msgid "Visits"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:240
+#: includes/admin/class-visitors-admin.php:292
 msgid "Visits - Member Directory Form"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:50
-msgid "Visits to Profile pages"
+#: includes/admin/class-visitors-admin.php:66
+msgid "Visits to Profile Pages"
 msgstr ""
 
-#: includes/admin/class-visitors-admin.php:55
-#: includes/admin/class-visitors-admin.php:60
-msgid "Visits to Profile pages %d"
+#: includes/admin/class-visitors-admin.php:71
+#: includes/admin/class-visitors-admin.php:76
+msgid "Visits to Profile Pages %d"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:31
+#: includes/core/class-um-visitors-options.php:32
 msgid "Week "
+msgstr ""
+
+#: includes/admin/class-visitors-admin.php:323
+msgid "WP All Users columns"
 msgstr ""
