@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Ultimate Member - User Visitors and Visits
  * Description:     Extension to Ultimate Member for the display of User Profile Visitors and User Profile Visits.
- * Version:         0.6.0 Development beta
+ * Version:         0.7.0 Development beta
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v2 or later
@@ -38,6 +38,7 @@ function um_visitors_plugins_loaded() {
     if ( is_admin()) {
 
         require_once( um_visitors_path . 'includes/admin/class-visitors-admin.php' );
+        require_once( um_visitors_path . 'includes/admin/class-visitors-modal.php' );
 
         if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
 
