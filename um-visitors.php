@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:     Ultimate Member - User Visitors and Visits
- * Description:     Extension to Ultimate Member for the display of User Profile Visitors and User Profile Visits. This extension can't update many of the visits when the profile page is cached by web hosting or a WP plugin.
- * Version:         0.5.0 Development beta
+ * Description:     Extension to Ultimate Member for the display of User Profile Visitors and User Profile Visits.
+ * Version:         0.6.0 Development beta
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v2 or later
@@ -29,6 +29,11 @@ function um_visitors_plugins_loaded() {
     $locale = ( get_locale() != '' ) ? get_locale() : 'en_US';
     load_textdomain( um_visitors_textdomain, WP_LANG_DIR . '/plugins/' . um_visitors_textdomain . '-' . $locale . '.mo' );
     load_plugin_textdomain( um_visitors_textdomain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+    if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
+
+        require_once( um_visitors_path . 'includes/visitors-shortcodes.php' );
+    }
 
     if ( is_admin()) {
 
