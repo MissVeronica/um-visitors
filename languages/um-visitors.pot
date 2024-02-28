@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Member - User Visitors and Visits\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-28 07:36+0000\n"
+"POT-Creation-Date: 2024-02-28 12:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -49,6 +49,10 @@ msgstr ""
 msgid "Create a Member Directory Form for display of User Profile Visits."
 msgstr ""
 
+#: includes/admin/class-visitors-modal.php:110
+msgid "Date"
+msgstr ""
+
 #: includes/admin/class-visitors-admin.php:300
 msgid "Display days ago in Members Directory"
 msgstr ""
@@ -65,6 +69,10 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/MissVeronica"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:108
+msgid "ID"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:308
@@ -160,6 +168,14 @@ msgstr ""
 msgid "My last %s of total %d visits"
 msgstr ""
 
+#: includes/admin/class-visitors-modal.php:88
+msgid "No access"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:126
+msgid "No data"
+msgstr ""
+
 #: includes/core/class-um-visitors-options.php:55
 msgid "No data for this User"
 msgstr ""
@@ -232,6 +248,24 @@ msgstr ""
 msgid "Ultimate Member - User Visitors and Visits"
 msgstr ""
 
+#: includes/admin/class-visitors-modal.php:56
+msgid "User Profile Visitors"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:24
+#, php-format
+msgid "User Profile Visitors for %s"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:51
+msgid "User Profile Visits"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:23
+#, php-format
+msgid "User Profile Visits for %s"
+msgstr ""
+
 #: includes/admin/class-visitors-admin.php:242
 msgid "User Roles"
 msgstr ""
@@ -243,6 +277,10 @@ msgstr ""
 
 #: includes/admin/class-visitors-admin.php:228
 msgid "User Visitors Settings"
+msgstr ""
+
+#: includes/admin/class-visitors-modal.php:109
+msgid "Username"
 msgstr ""
 
 #: includes/core/class-um-visitors-directory.php:114
@@ -273,6 +311,7 @@ msgid "Visitor times"
 msgstr ""
 
 #: includes/core/class-um-visitors-options.php:165
+#: includes/admin/class-visitors-modal.php:45
 msgid "Visitors"
 msgstr ""
 
@@ -281,6 +320,7 @@ msgid "Visitors - Member Directory Form"
 msgstr ""
 
 #: includes/core/class-um-visitors-options.php:175
+#: includes/admin/class-visitors-modal.php:36
 msgid "Visits"
 msgstr ""
 
@@ -304,3 +344,4 @@ msgstr ""
 #: includes/admin/class-visitors-admin.php:323
 msgid "WP All Users columns"
 msgstr ""
+
