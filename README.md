@@ -9,6 +9,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 5. Display days ago in Members Directory - If not selected WP date format will be used.
 6. Counters per week - If not selected counters will use days.
 7. Number of counters - Enter the number of days/weeks for User counter displays.
+8. WP All Users columns - Select the sortable columns for Plugin's UM Predefined fields in WP All Users page.
 
 ## Member Directory
 1. Create two new Directories for display of Visitors and Visits
@@ -27,7 +28,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. Statistic metabox
 
 ## WP All Users
-
+1. Sortable columns for the Plugin's UM Predfined fields 
 
 ## Translations
 1. Textdomain: um-visitors
