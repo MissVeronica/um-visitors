@@ -94,13 +94,24 @@ class UM_Vistors_Modal {
     public function get_modal_html( $user_id, $vv_type ) {
 
         $user = get_user_by( 'id', $user_id );
+        um_fetch_user( $user_id );
 
         ob_start(); ?>
 
         <div style="margin-left:15px;">
         <h2><?php echo sprintf( $this->heading[$vv_type], esc_attr( $user->user_login )); ?></h2>
         <?php
-        um_fetch_user( $user_id );
+        $vv = new Visitors_Shortcodes();
+        echo $vv->vv_show_activity_shortcode();
+        echo '<hr>';
+        echo $vv->vv_show_daily( $vv_type . '_counter', array( 'limit' => 7 ), __( 'Daily ( 7 last days )', 'um-visitors' ) );
+        echo '<hr>';
+        switch( $vv_type ) {
+            case 'vv_visits':   echo $vv->vv_show_total_visits_shortcode(); break;
+            case 'vv_visitors': echo $vv->vv_show_total_visitors_shortcode(); break;
+        }
+        echo '<hr>';
+
         $vv_array = um_user( $vv_type );
         if ( ! empty( $vv_array )) { ?>
             <table>
@@ -123,7 +134,10 @@ class UM_Vistors_Modal {
             </table>
 
 <?php   } else {
-            echo '<div>' . __( 'No data', 'um-visitors' ) . '</div>';
+            switch( $vv_type ) {
+                case 'vv_visits':   echo '<div>' . __( 'No visits data',   'um-visitors' ) . '</div>'; break;
+                case 'vv_visitors': echo '<div>' . __( 'No visitors data', 'um-visitors' ) . '</div>'; break;
+            }
         } ?>
         </div>
 <?php
