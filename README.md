@@ -27,10 +27,16 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 
 ## Shortcodes
 1. [vv_show_activity] Display of last user activity in human format.
+2. [vv_show_total_visits]Header text[/vv_show_total_visits]
+3. [vv_show_total_visitors]Header text[/vv_show_total_visitors]
+4. [vv_show_key_visits key="today"]Your profile has been viewed %s times today[/vv_show_key_visits]
+5. [vv_show_key_visitors key="week"]You have been looking at %s profiles this week[/vv_show_key_visitors]
+6. [vv_show_daily_visits limi="7"]Your number of visits to other profiles each day last week[/vv_show_daily_visits]
+7. [vv_show_daily_visitors]Your number of visitors to your profile each day last week[/vv_show_daily_visitors]
 
 ## WP All Users
 1. Sortable columns for the Plugin's UM Predfined fields
-2. Modal links for Visits and Visitors
+2. Modal links for Visits and Visitors with display of all shortcodes 
 
 ## Translations
 1. Textdomain: um-visitors
