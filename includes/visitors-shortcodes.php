@@ -12,8 +12,14 @@ class Visitors_Shortcodes {
 
     function __construct() {
 
-        add_shortcode( 'vv_add_activity',    array( $this, 'vv_add_activity_shortcode' ));
-        add_shortcode( 'vv_show_activity',   array( $this, 'vv_show_activity_shortcode' ));
+        add_shortcode( 'vv_add_activity',        array( $this, 'vv_add_activity_shortcode' ));
+        add_shortcode( 'vv_show_activity',       array( $this, 'vv_show_activity_shortcode' ));
+        add_shortcode( 'vv_show_total_visits',   array( $this, 'vv_show_total_visits_shortcode' ));
+        add_shortcode( 'vv_show_total_visitors', array( $this, 'vv_show_total_visitors_shortcode' ));
+        add_shortcode( 'vv_show_key_visits',     array( $this, 'vv_show_key_visits_shortcode' ));
+        add_shortcode( 'vv_show_key_visitors',   array( $this, 'vv_show_key_visitors_shortcode' ));
+        add_shortcode( 'vv_show_daily_visits',   array( $this, 'vv_show_daily_visits_shortcode' ));
+        add_shortcode( 'vv_show_daily_visitors', array( $this, 'vv_show_daily_visitors_shortcode' ));
 
         $this->vv_last_activity = array(
             'vv_last_activity'    => __( 'Last user activity %s ago',       'um-visitors' ),
@@ -33,7 +39,7 @@ class Visitors_Shortcodes {
         update_user_meta( $current_user->ID, 'vv_last_activity', date_i18n( $this->date_format, $this->current_time ) );
     }
 
-    public function vv_show_activity_shortcode() {
+    public function vv_show_activity_shortcode( $attrs = array(), $content = '' ) {
 
         $message = '';
 
@@ -56,6 +62,140 @@ class Visitors_Shortcodes {
         }
 
         return esc_attr( $message );
+    }
+
+    public function vv_show_total_visits_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_total_visitors( 'vv_visits_combo', $attrs, $content );
+    }
+
+    public function vv_show_total_visitors_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_total_visitors( 'vv_visitors_combo', $attrs, $content );
+    }
+
+    public function vv_show_total_visitors( $vv_type, $attrs, $content ) {
+
+        ob_start();
+        if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
+            $vv_array = um_user( $vv_type );
+            if ( is_array( $vv_array ) && ! empty( $vv_array )) {
+                if( ! empty( $content )) {
+                    echo '<h4>' . esc_attr( $content ) . '</h4>';
+                }
+                $text = array();
+                if ( $vv_type == 'vv_visitors_combo' ) {
+                    $text = array(  
+                                    'today' => __( 'Visitors today %s',      'vv_visitors' ),
+                                    'week'  => __( 'Visitors this week %s',  'vv_visitors' ),
+                                    'month' => __( 'Visitors this month %s', 'vv_visitors' ),
+                                    'total' => __( 'Visitors total %s',      'vv_visitors' ),
+                                );
+                }
+                if ( $vv_type == 'vv_visits_combo' ) {
+                    $text = array(  
+                                    'today' => __( 'Visits today %s',      'vv_visitors' ),
+                                    'week'  => __( 'Visits this week %s',  'vv_visitors' ),
+                                    'month' => __( 'Visits this month %s', 'vv_visitors' ),
+                                    'total' => __( 'Visits total %s',      'vv_visitors' ),
+                                );
+                }
+                foreach( $vv_array as $key => $value ) {
+                    echo '<div>';
+                    switch( $key ) {
+                        case 'today':   echo sprintf( $text[$key], array_pop( $value )); break;
+                        case 'week':    echo sprintf( $text[$key], array_pop( $value )); break;
+                        case 'month':   echo sprintf( $text[$key], array_pop( $value )); break;
+                        case 'total':   echo sprintf( $text[$key], $value ); break;
+                        default: break;
+                    }
+                    echo '</div>';
+                }
+
+            } else {
+                echo '<div>' . __( 'No combo data', 'um-visitors' ) . '</div>';
+            }
+        }
+        return ob_get_clean();
+    }
+
+    public function vv_show_key_visits_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_key_visitors( 'vv_visits_combo', $attrs, $content );
+    }
+    
+    public function vv_show_key_visitors_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_key_visitors( 'vv_visitors_combo', $attrs, $content );        
+    }
+
+    public function vv_show_key_visitors( $vv_type, $attrs, $content ) {
+
+        ob_start();
+        if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
+            if ( isset( $attrs['key'] )) {
+                $vv_array = um_user( $vv_type );
+                if ( is_array( $vv_array ) && array_key_exists( $attrs['key'], $vv_array )) {
+                    echo '<div>';
+                    if ( $attrs['key'] != 'total' ) {
+                        $value = array_pop( $vv_array[$attrs['key']] );
+
+                    } else {
+                        $value = $vv_array[$attrs['key']];
+                    }
+                    if ( ! empty( $content )) {
+                        if ( ! strpos( $content, '%s')) {
+                            $content .= ' %s';
+                        }
+                        echo esc_html( sprintf( $content, absint( $value )));
+
+                    } else {
+                        echo $value;
+                    }
+                    echo '</div>';
+
+                } else {
+                    echo '<div>' . sprintf( __( 'No %s data', 'um-visitors' ), $attrs['key'] ) . '</div>';
+                }
+            }
+        }
+        return ob_get_clean();
+    }
+
+    public function vv_show_daily_visits_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_daily( 'vv_visits_counter', $attrs, $content );
+    }
+
+    public function vv_show_daily_visitors_shortcode( $attrs = array(), $content = '' ) {
+
+        return $this->vv_show_daily( 'vv_visitors_counter', $attrs, $content );
+    }
+
+    public function vv_show_daily( $vv_type, $attrs, $content = '' ) {
+
+        ob_start();
+        if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
+            $vv_array = um_user( $vv_type );
+            if ( is_array( $vv_array ) && ! empty( $vv_array )) {
+                krsort( $vv_array );
+                if ( isset( $attrs['limit'] )) {
+                    $vv_array = array_slice( $vv_array, 0, absint( $attrs['limit'] ));
+                }
+                if( ! empty( $content )) {
+                    echo '<h4>' . esc_attr( $content ) . '</h4>';
+                }
+                foreach( $vv_array as $key => $value ) {
+                    echo '<div>';
+                    echo esc_attr( date_i18n( get_option( 'date_format' ) . ' ', strtotime( $key ))) . esc_attr( $value );
+                    echo '</div>';
+                }
+
+            } else {
+                echo '<div>' . __( 'No daily data', 'um-visitors' ) . '</div>';
+            }
+        }
+        return ob_get_clean();
     }
 }
 
