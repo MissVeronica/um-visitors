@@ -95,6 +95,39 @@ class Visitors_User{
         update_user_meta( $uid, $type, $vv_counter );
     }
 
+    public function update_user_meta_vv_combo( $uid, $type ) {
+
+        $vv_combo = um_user( $type );
+        if ( empty( $vv_combo ) || ! is_array( $vv_combo )) {
+            $vv_combo = array();
+        }
+
+        $today = date_i18n( 'Y/m/d', $this->current_time );
+        if ( ! isset( $vv_combo['today'][$today])) {
+            $vv_combo['today'] = array( $today => 0 );
+        }
+        $vv_combo['today'][$today]++;
+
+        $curr_week = date_i18n( 'W', $this->current_time );
+        if ( ! isset( $vv_combo['week'][$curr_week])) {
+            $vv_combo['week'] = array( $curr_week => 0 );
+        }
+        $vv_combo['week'][$curr_week]++;
+
+        $curr_month = date_i18n( 'F', $this->current_time );
+        if ( ! isset( $vv_combo['month'][$curr_month])) {
+            $vv_combo['month'] = array( $curr_month => 0 );
+        }
+        $vv_combo['month'][$curr_month]++;
+
+        if ( ! isset( $vv_combo['total'] )) {
+            $vv_combo['total'] = 0;
+        }
+        $vv_combo['total']++;
+
+        update_user_meta( $uid, $type, $vv_combo );
+    }
+
     //	UM access profile pages
 
     public function user_viewing_profile_page( $args ) {
@@ -120,6 +153,7 @@ class Visitors_User{
 
             $this->update_user_meta_vv_array(   $visited_user_id, "vv_visitors", $meta_data_visitors );
             $this->update_user_meta_vv_counter( $visited_user_id, "vv_visitors_counter" );
+            $this->update_user_meta_vv_combo(   $visited_user_id, "vv_visitors_combo" );
 
             $this->reload_um_cache( $visited_user_id );
         }
@@ -133,6 +167,7 @@ class Visitors_User{
 
             $this->update_user_meta_vv_array(   $visitor_user_id, "vv_visits", $meta_data_visits );
             $this->update_user_meta_vv_counter( $visitor_user_id, "vv_visits_counter" );
+            $this->update_user_meta_vv_combo(   $visitor_user_id, "vv_visits_combo" );
         }
 
         $this->reload_um_cache( $visitor_user_id );
