@@ -43,8 +43,8 @@ class Visitors_Admin {
             'vv_last_activity'    => __( 'Last activity',      'um-visitors' ),
             'vv_last_logout'      => __( 'Last logout',        'um-visitors' ),
             'vv_last_update'      => __( 'Last update',        'um-visitors' ),
-            'vv_visits_counter'   => __( 'Number of visits',   'um-visitors' ),
-            'vv_visitors_counter' => __( 'Number of visitors', 'um-visitors' ),
+            'vv_visits_combo'     => __( 'Number of visits',   'um-visitors' ),
+            'vv_visitors_combo'   => __( 'Number of visitors', 'um-visitors' ),
             '_um_last_login'      => __( 'Last login',         'um-visitors' ),
         );
     }
@@ -62,6 +62,11 @@ class Visitors_Admin {
 
     public function toplevel_page_visits_visitors() {
 
+        $this->show_dashboard_metabox_combo( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_combo', true );
+        $this->show_dashboard_metabox_combo( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_combo',   true );
+        ?>
+        <div style="font-weight: bold;"><?php echo __( 'Old Stat', 'um-visitors' ) ?> </div>
+        <?php
         $this->show_dashboard_metabox_content( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_counter', true );
         $this->show_dashboard_metabox_content( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_counter',   true );
         ?>
@@ -168,6 +173,17 @@ class Visitors_Admin {
         }
     }
 
+    public function show_dashboard_metabox_combo( $header, $counter, $hline ) {
+
+        global $wpdb;
+
+        $vv_combo = $wpdb->get_results( "SELECT * FROM {$wpdb->usermeta} WHERE meta_key = '{$counter}'" );
+    
+        if ( ! empty( $vv_combo ) && count( $vv_combo ) > 0 ) {
+
+        }
+    }
+
     public function um_members_directory_sort_fields_vv( $sort_fields ) {
 
         $sort_fields['vv_visitor_times'] = __( 'Visitor times', 'um-visitors' );
@@ -199,8 +215,8 @@ class Visitors_Admin {
                     $value = '-';
                 }
 
-                if ( is_array( $value )) {
-                    $value = array_sum( $value );
+                if ( is_array( $value ) && isset( $value['total'] ) ) {                    
+                    $value = $value['total'];
                 }
                 break;
             }
