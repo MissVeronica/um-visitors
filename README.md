@@ -29,8 +29,8 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. [vv_show_activity] Display of last user activity in human format.
 2. [vv_show_total_visits]Header text[/vv_show_total_visits]
 3. [vv_show_total_visitors]Header text[/vv_show_total_visitors]
-4. [vv_show_key_visits key="week"]You have been looking at %s other profiles this week[/vv_show_key_visits]
-5. [vv_show_key_visitors key="today"]Your profile has been viewed %s times today[/vv_show_key_visitors]
+4. [vv_show_key_visits key="week"]You have been looking at %s other profiles this week[/vv_show_key_visits] Possible keys: today, week, month, total
+5. [vv_show_key_visitors key="today"]Your profile has been viewed %s times today[/vv_show_key_visitors] Possible keys: today, week, month, total
 6. [vv_show_daily_visits limit="7"]Your number of visits to other profiles each day last week[/vv_show_daily_visits]
 7. [vv_show_daily_visitors limit="7"]Your number of visitors to your profile each day last week[/vv_show_daily_visitors]
 
