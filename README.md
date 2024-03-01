@@ -33,7 +33,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 5. [vv_show_key_visitors key="today"]Your profile has been viewed %s times today[/vv_show_key_visitors] Possible keys: today, week, month, total
 6. [vv_show_daily_visits limit="7"]Your number of visits to other profiles each day last week[/vv_show_daily_visits]
 7. [vv_show_daily_visitors limit="7"]Your number of visitors to your profile each day last week[/vv_show_daily_visitors]
-8. [dashboard] 
+8. [vv_dashboard] 
 
 ## WP All Users
 1. Sortable columns for the Plugin's UM Predfined fields
@@ -44,7 +44,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 
 ## Updates
 1. Version 1.1.0 Code improvements
-2. Version 1.2.0 Reduced info in UM Dashboard. New shortcode [dashboard]
+2. Version 1.2.0 Reduced info in UM Dashboard. New shortcode [vv_dashboard]
 
 ## Installation
 1. Install by downloading the plugin ZIP file and install as a new Plugin, which you upload in WordPress -> Plugins -> Add New -> Upload Plugin.
