@@ -20,6 +20,7 @@ class Visitors_Shortcodes {
         add_shortcode( 'vv_show_key_visitors',   array( $this, 'vv_show_key_visitors_shortcode' ));
         add_shortcode( 'vv_show_daily_visits',   array( $this, 'vv_show_daily_visits_shortcode' ));
         add_shortcode( 'vv_show_daily_visitors', array( $this, 'vv_show_daily_visitors_shortcode' ));
+        add_shortcode( 'vv_dashboard',           array( $this, 'vv_dashboard_shortcode' ));
 
         $this->vv_last_activity = array(
             'vv_last_activity'    => __( 'Last user activity %s ago',       'um-visitors' ),
@@ -64,28 +65,105 @@ class Visitors_Shortcodes {
         return esc_attr( $message );
     }
 
+    public function vv_dashboard_shortcode() {
+
+        ob_start();
+
+        $this->show_dashboard_metabox_combo( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_combo', true );
+        $this->show_dashboard_metabox_combo( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_combo',   true );
+
+        return ob_get_clean();
+    }
+
+    public function show_dashboard_metabox_combo( $header, $counter, $hline ) {
+
+        global $wpdb;
+
+        $vv_combos = $wpdb->get_results( "SELECT * FROM {$wpdb->usermeta} WHERE meta_key = '{$counter}'" );
+
+        if ( ! empty( $vv_combos ) && count( $vv_combos ) > 0 ) {
+
+            $keys = array( 'today', 'week', 'month', 'total' );
+            $totals = array( 'today' => array( 'x' => 0 ),
+                             'week'  => array( 'x' => 0 ),
+                             'month' => array( 'x' => 0 ),
+                             'total' => 0,
+                            );
+            $max_values = array( 'today' => 0, 'week' => 0, 'month' => 0, 'total' => 0 );
+            $max_userid = array( 'today' => 0, 'week' => 0, 'month' => 0, 'total' => 0 );
+
+            foreach( $vv_combos as $vv_combo ) {
+
+                $meta_value = $this->validate_daily( maybe_unserialize( $vv_combo->meta_value ), $counter, $vv_combo->user_id );
+
+                foreach( $keys as $key ) {
+
+                    switch( $key ) {
+                        case 'today':
+                        case 'week':
+                        case 'month':   $value = array_pop( $meta_value[$key] );
+                                        if ( $value > $max_values[$key] ) {
+                                            $max_values[$key] = $value;
+                                            $max_userid[$key] = $vv_combo->user_id;
+                                        }
+                                        $totals[$key]['x'] += $value;
+                                        break;
+
+                        case 'total':   $totals[$key] += $meta_value[$key];
+                                        if ( $meta_value[$key] > $max_values[$key] ) {
+                                            $max_values[$key] = $meta_value[$key];
+                                            $max_userid[$key] = $vv_combo->user_id;
+                                        }
+                                        break;
+                        default:        break;
+                    }
+                }
+            }
+
+            echo '<div style="font-weight: bold;">' . __( 'Totals', 'um-visitors' ) . '</div>';
+            echo $this->vv_show_total_visitors( $counter, $totals, '', '', false );
+            echo '<hr>';
+
+            echo '<div style="font-weight: bold;">' . __( 'Top Users', 'um-visitors' ) . '</div>';
+            foreach( $keys as $key ) {
+
+                if ( $max_userid[$key] == 0 ) {
+                    echo '<div>' . ucfirst( $key ) . ' ' . __( 'None', 'um-visitors' ) . '</div>';
+
+                } else {
+                    $user = get_user_by( 'ID', $max_userid[$key] );
+                    $user = '<a href="' . esc_url( um_user_profile_url( $max_userid[$key] )) . '">' . esc_attr( $user->user_login ) . '</a>';
+                    echo '<div>' . ucfirst( $key ) . ' ' . $user . ' ' . $max_values[$key] . '</div>';
+                }
+            }
+            echo '<hr>';
+        }
+    }
+
     public function vv_show_total_visits_shortcode( $attrs = array(), $content = '' ) {
 
-        return $this->vv_show_total_visitors( 'vv_visits_combo', $attrs, $content );
+        $vv_array = um_user( 'vv_visits_combo' );
+        return $this->vv_show_total_visitors( 'vv_visits_combo', $vv_array, $attrs, $content );
     }
 
     public function vv_show_total_visitors_shortcode( $attrs = array(), $content = '' ) {
 
-        return $this->vv_show_total_visitors( 'vv_visitors_combo', $attrs, $content );
+        $vv_array = um_user( 'vv_visitors_combo' );
+        return $this->vv_show_total_visitors( 'vv_visitors_combo', $vv_array, $attrs, $content );
     }
 
-    public function vv_show_total_visitors( $vv_type, $attrs, $content ) {
+    public function vv_show_total_visitors( $vv_type, $vv_array, $attrs, $content, $validate = true ) {
 
         ob_start();
         if ( UM()->options()->get( 'visitors_active' ) == 1 ) {
-            $vv_array = um_user( $vv_type );
+
             if ( is_array( $vv_array ) && ! empty( $vv_array )) {
                 if( ! empty( $content )) {
                     echo '<h4>' . esc_attr( $content ) . '</h4>';
                 }
                 $text = array();
                 if ( $vv_type == 'vv_visitors_combo' ) {
-                    $text = array(  
+                    $text = array(
                                     'today' => __( 'Visitors today %s',      'vv_visitors' ),
                                     'week'  => __( 'Visitors this week %s',  'vv_visitors' ),
                                     'month' => __( 'Visitors this month %s', 'vv_visitors' ),
@@ -102,7 +180,9 @@ class Visitors_Shortcodes {
                                 );
                 }
 
-                $vv_array = $this->validate_daily( $vv_array, $vv_type );
+                if ( $validate ) {
+                    $vv_array = $this->validate_daily( $vv_array, $vv_type );
+                }
 
                 foreach( $vv_array as $key => $value ) {
                     echo '<div>';
@@ -120,6 +200,7 @@ class Visitors_Shortcodes {
                 echo '<div>' . __( 'No combo data', 'um-visitors' ) . '</div>';
             }
         }
+
         return ob_get_clean();
     }
 
@@ -127,10 +208,10 @@ class Visitors_Shortcodes {
 
         return $this->vv_show_key_visitors( 'vv_visits_combo', $attrs, $content );
     }
-    
+
     public function vv_show_key_visitors_shortcode( $attrs = array(), $content = '' ) {
 
-        return $this->vv_show_key_visitors( 'vv_visitors_combo', $attrs, $content );        
+        return $this->vv_show_key_visitors( 'vv_visitors_combo', $attrs, $content );
     }
 
     public function vv_show_key_visitors( $vv_type, $attrs, $content ) {
@@ -169,6 +250,7 @@ class Visitors_Shortcodes {
                 }
             }
         }
+
         return ob_get_clean();
     }
 
@@ -205,44 +287,50 @@ class Visitors_Shortcodes {
                 echo '<div>' . __( 'No daily data', 'um-visitors' ) . '</div>';
             }
         }
+
         return ob_get_clean();
     }
 
-    public function validate_daily( $vv_combo, $vv_type ) {
+    public function validate_daily( $vv_combo, $vv_type, $user_id = false ) {
 
         $keys = array( 'today', 'week', 'month' );
         $update = false;
+        if ( is_array( $vv_combo ) && ! empty( $vv_combo )) {
+            foreach( $keys as $key ) {
 
-        foreach( $keys as $key ) {
+                switch( $key ) {
+                    case 'today':   $today = date_i18n( 'Y/m/d', $this->current_time );
+                                    if ( ! isset( $vv_combo['today'][$today])) {
+                                        $vv_combo['today'] = array( $today => 0 );
+                                        $update = true;
+                                    }
+                                    break;
 
-            switch( $key ) {
-                case 'today':   $today = date_i18n( 'Y/m/d', $this->current_time );
-                                if ( ! isset( $vv_combo['today'][$today])) {
-                                    $vv_combo['today'] = array( $today => 0 );
-                                    $update = true;
-                                }
-                                break;
+                    case 'week':    $curr_week = date_i18n( 'W', $this->current_time );
+                                    if ( ! isset( $vv_combo['week'][$curr_week])) {
+                                        $vv_combo['week'] = array( $curr_week => 0 );
+                                        $update = true;
+                                    }
+                                    break;
 
-                case 'week':    $curr_week = date_i18n( 'W', $this->current_time );
-                                if ( ! isset( $vv_combo['week'][$curr_week])) {
-                                    $vv_combo['week'] = array( $curr_week => 0 );
-                                    $update = true;
-                                }
-                                break;
+                    case 'month':   $curr_month = date_i18n( 'F', $this->current_time );
+                                    if ( ! isset( $vv_combo['month'][$curr_month])) {
+                                        $vv_combo['month'] = array( $curr_month => 0 );
+                                        $update = true;
+                                    }
+                                    break;
+                }
+            }
 
-                case 'month':   $curr_month = date_i18n( 'F', $this->current_time );
-                                if ( ! isset( $vv_combo['month'][$curr_month])) {
-                                    $vv_combo['month'] = array( $curr_month => 0 );
-                                    $update = true;
-                                }
-                                break;
+            if ( $update ) {
+                if ( ! $user_id ) {
+                    $user_id = um_user( 'ID' );
+                }
+                update_user_meta( $user_id, $vv_type, $vv_combo );
+                // cache
             }
         }
 
-        if ( $update ) {
-            update_user_meta( um_user( 'ID' ), $vv_type, $vv_combo );
-            // cache
-        }
         return $vv_combo;
     }
 }
