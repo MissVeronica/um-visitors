@@ -42,7 +42,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. Textdomain: um-visitors
 
 ## Updates
-None
+1. Version 1.1.0 Code improvements
 
 ## Installation
 1. Install by downloading the plugin ZIP file and install as a new Plugin, which you upload in WordPress -> Plugins -> Add New -> Upload Plugin.
