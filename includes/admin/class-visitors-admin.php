@@ -62,13 +62,6 @@ class Visitors_Admin {
 
     public function toplevel_page_visits_visitors() {
 
-        $this->show_dashboard_metabox_combo( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_combo', true );
-        $this->show_dashboard_metabox_combo( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_combo',   true );
-        ?>
-        <div style="font-weight: bold;"><?php echo __( 'Old Stat', 'um-visitors' ) ?> </div>
-        <?php
-        $this->show_dashboard_metabox_content( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_counter', true );
-        $this->show_dashboard_metabox_content( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_counter',   true );
         ?>
         <div style="font-weight: bold;"><?php echo __( 'Last 24 hours', 'um-visitors' ) ?> </div>
         <?php
@@ -140,50 +133,6 @@ class Visitors_Admin {
         }
     }
 
-    public function show_dashboard_metabox_content( $header, $counter, $hline ) {
-
-        global $wpdb;
-
-        $vv_counter = $wpdb->get_results( "SELECT * FROM {$wpdb->usermeta} WHERE meta_key = '{$counter}'" );
-    
-        if ( ! empty( $vv_counter ) && count( $vv_counter ) > 0 ) {
-
-            $max = 0;
-
-            foreach( $vv_counter as $counter ) {
-
-                $array = maybe_unserialize( $counter->meta_value );
-                if ( is_array( $array ) && array_sum( $array ) > $max ) {
-                    $max = array_sum( $array );
-                    $user_id = $counter->user_id;
-                }
-            }
-
-            $user = get_user_by( 'ID', $user_id );
-            $user = '<a href="' . esc_url( um_user_profile_url( $user_id )) . '">' . $user->user_login . '</a>';
-
-            ?>
-            <div style="font-weight: bold;"><?php echo $header ?> </div>
-            <div><?php echo sprintf( __( 'Number of Users %d',     'um-visitors' ), count( $vv_counter )); ?> </div>
-            <div><?php echo sprintf( __( 'Max ID %s (%s) with %d', 'um-visitors' ), $user_id, $user, $max ); ?> </div>
-            <?php
-            if ( $hline ) {
-                echo '<hr>';
-            }
-        }
-    }
-
-    public function show_dashboard_metabox_combo( $header, $counter, $hline ) {
-
-        global $wpdb;
-
-        $vv_combo = $wpdb->get_results( "SELECT * FROM {$wpdb->usermeta} WHERE meta_key = '{$counter}'" );
-    
-        if ( ! empty( $vv_combo ) && count( $vv_combo ) > 0 ) {
-
-        }
-    }
-
     public function um_members_directory_sort_fields_vv( $sort_fields ) {
 
         $sort_fields['vv_visitor_times'] = __( 'Visitor times', 'um-visitors' );
@@ -215,7 +164,7 @@ class Visitors_Admin {
                     $value = '-';
                 }
 
-                if ( is_array( $value ) && isset( $value['total'] ) ) {                    
+                if ( is_array( $value ) && isset( $value['total'] ) ) {
                     $value = $value['total'];
                 }
                 break;
