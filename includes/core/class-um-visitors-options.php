@@ -19,91 +19,25 @@ class Visitors_User_Options{
         $this->current_time = current_time( 'timestamp' );
     }
 
-    public function directory_um_shortcode( $form_id, $header, $daily ) {
+    public function directory_um_shortcode( $form_id, $header ) {
 
         global $current_user;
 
-        if ( ! empty( $daily )) {
+        if ( ! empty( $form_id )) {
 
-            echo '<h4>' . $header . '</h4>';
+            set_transient( "vv_{$form_id}_{$current_user->ID}", um_profile_id(), DAY_IN_SECONDS );
 
-            $week = '';
-            if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
-                $week = __( 'Week ', 'um-visitors' );
-            }
-
-            foreach( $daily as $day => $number ) {
-                echo '<div>' . $week . $day . ': ' . $number . '</div>';
-            }
-
-            if ( ! empty( $form_id )) {
-                set_transient( "vv_{$form_id}_{$current_user->ID}", um_profile_id(), DAY_IN_SECONDS );
-
-                $shortcode = '[ultimatemember form_id="' . $form_id . '" /]';
-                if ( version_compare( get_bloginfo('version'), '5.4', '<' ) ) {
-                    echo do_shortcode( $shortcode );
-
-                } else {
-                    echo apply_shortcodes( $shortcode );
-                }
+            $shortcode = '[ultimatemember form_id="' . $form_id . '" /]';
+            if ( version_compare( get_bloginfo('version'), '5.4', '<' ) ) {
+                echo do_shortcode( $shortcode );
 
             } else {
-                echo '<h4>' . __( 'No Form defined', 'um-visitors' ) . '</h4>';
+                echo apply_shortcodes( $shortcode );
             }
 
         } else {
-            echo '<h4>' . __( 'No data for this User', 'um-visitors' ) . '</h4>';
+            echo '<h4>' . __( 'No Form defined', 'um-visitors' ) . '</h4>';
         }
-    }
-
-    public function count_daily_visitors( $array ) {
-
-        $counts = 0;
-
-        if ( ! empty( $array )) {
-
-            $counts = array();
-            if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
-
-                $days = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
-                $time_start = $days[get_option( 'start_of_week' )] . ' midnight';
-                $time_length = 7 * DAY_IN_SECONDS;
-                $index_format = 'W';
-                $limit = intval( UM()->options()->get( 'vv_summary_limit' ));
-
-            } else {
-                $time_start = 'today midnight';
-                $time_length = DAY_IN_SECONDS;
-                $index_format = 'F d';
-                $limit = intval( UM()->options()->get( 'vv_summary_limit' ));
-            }
-
-            $date = new DateTime( $time_start );
-            $midnight = $date->getTimestamp() + $time_length;
-            $index = date_i18n( $index_format, $midnight - $time_length );
-            $counts[$index] = 0;
-
-            foreach( $array as $id => $time ) {
-
-                if ( $time < $midnight ) {
-                    $counts[$index]++;
-
-                } else {
-                    $index = date_i18n( $index_format, $midnight );
-                    $midnight = $midnight - $time_length;                
-                    $counts[$index] = 0;
-                    if ( $time < $midnight ) {
-                        $counts[$index]++;
-                    }
-                }
-
-                if ( count( $counts ) == $limit ) {
-                    break;
-                }
-            }
-        }
-
-        return $counts;
     }
 
     public function get_form_max_users( $form_id, $counter ) {
@@ -129,19 +63,35 @@ class Visitors_User_Options{
 		$max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visitors' )) );
         $header = sprintf( __( 'My last %s of total %d visitors', 'um-visitors' ), $max_users, (array)count( um_user( 'vv_visitors' )) );
 
-        $daily = $this->count_daily_visitors( um_user( 'vv_visitors' ) );
+        if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
+            $vv = new Visitors_Shortcodes();
+            echo $vv->vv_show_daily( 'vv_visitors_counter', array(), $header );
 
-        $this->directory_um_shortcode( $form_id, $header, $daily );
+        } else {
+            $vv = new Visitors_Shortcodes();
+            echo $vv->vv_show_total_visitors_shortcode( array(), $header );
+        }
+
+        $this->directory_um_shortcode( $form_id, $header );
     }
 
     public function profile_content_visits_default( $args ) {
 
         $form_id = UM()->options()->get( 'vv_visits_form_id' );
+
         $max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visits' )) );
         $header = sprintf( __( 'My last %s of total %d visits', 'um-visitors' ), $max_users, count( (array)um_user( 'vv_visits' )) );
-        $daily = $this->count_daily_visitors( um_user( 'vv_visits' ) );
 
-        $this->directory_um_shortcode( $form_id, $header, $daily );
+        if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
+            $vv = new Visitors_Shortcodes();
+            echo $vv->vv_show_daily( 'vv_visits_counter', array(), $header );
+
+        } else {
+            $vv = new Visitors_Shortcodes();
+            echo $vv->vv_show_total_visits_shortcode( array(), $header );
+        }
+
+        $this->directory_um_shortcode( $form_id, $header );
     }
 
     public function format_date( $time ) {
@@ -214,3 +164,4 @@ class Visitors_User_Options{
 }
 
 new Visitors_User_Options();
+
