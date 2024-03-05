@@ -111,12 +111,12 @@ class Visitors_Directory{
     public function um_members_after_user_name_tmpl_vv( $args ) {
 
         if ( isset( $args['vv_show_visits'] ) && $args['vv_show_visits'] == 1 ) {
-            echo '<div>' . __( 'Visit', 'um-visitors' ) . ' {{{user.vv_visits}}}</div>';
+            echo '<div class="vv_header">' . __( 'Visit', 'um-visitors' ) . ' {{{user.vv_visits}}}</div>';
             return;
         }
 
         if ( isset( $args['vv_show_visitors'] ) && $args['vv_show_visitors'] == 1 ) {
-            echo '<div>' . __( 'Visitor', 'um-visitors' ) . ' {{{user.vv_visitors}}}</div>';
+            echo '<div class="vv_vv_header">' . __( 'Visitor', 'um-visitors' ) . ' {{{user.vv_visitors}}}</div>';
             return;
         }
     }
