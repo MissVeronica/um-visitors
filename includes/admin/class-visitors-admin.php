@@ -26,7 +26,6 @@ class Visitors_Admin {
             add_filter( 'manage_users_columns',                      array( $this, 'manage_users_columns_new_vv_columns' ));
             add_filter( 'manage_users_custom_column',                array( $this, 'manage_users_custom_column_new_vv_columns' ), 10, 3 );
             add_filter( 'manage_users_sortable_columns',             array( $this, 'register_sortable_columns_vv_custom' ), 10, 1 );
-
         }
 
         $um_directory_forms = get_posts( array( 'numberposts' => -1,
@@ -246,7 +245,7 @@ class Visitors_Admin {
                                     'size'        => 'small',
                                     'conditional' => array( "visitors_active", '=', 1 )
                                 );
- 
+
             if ( ! empty( UM()->options()->get( 'vv_visitors_form_id' ))) {
                 unset( $this->directory_forms[UM()->options()->get( 'vv_visitors_form_id' )] );
             }
@@ -269,15 +268,15 @@ class Visitors_Admin {
 
             $all_fields[] = array(  'id'          => 'vv_summary_weeks',
                                     'type'        => 'checkbox',
-                                    'label'       => __( 'Counters per week', 'um-visitors' ),
-                                    'description' => __( 'If not selected counters will use days.', 'um-visitors' ),
+                                    'label'       => __( 'Summary counters before the Directory', 'um-visitors' ),
+                                    'description' => __( 'If not selected counters will use "today/week/month/total" otherwise "last days".', 'um-visitors' ),
                                     'conditional' => array( "visitors_active", '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_summary_limit',
                                     'type'        => 'text',
-                                    'label'       => __( 'Number of counters', 'um-visitors' ),
-                                    'description' => __( 'Enter the number of days/weeks for User counter displays.', 'um-visitors' ),
+                                    'label'       => __( 'Number of counters for "last days"', 'um-visitors' ),
+                                    'description' => __( 'Enter the number of days for User counters display.', 'um-visitors' ),
                                     'size'        => 'small',
                                     'conditional' => array( "visitors_active", '=', 1 )
                                 );
