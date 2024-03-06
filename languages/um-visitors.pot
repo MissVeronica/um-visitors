@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Member - User Visitors and Visits\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-05 15:03+0000\n"
+"POT-Creation-Date: 2024-03-06 13:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.4.3\n"
 "X-Domain: um-visitors"
 
-#: includes/core/class-um-visitors-directory.php:228
+#: includes/core/class-um-visitors-directory.php:273
 msgid "%d days ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:215
+#: includes/core/class-um-visitors-directory.php:260
 msgid "%d hours ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:219
+#: includes/core/class-um-visitors-directory.php:264
 msgid "%d minutes ago"
 msgstr ""
 
@@ -77,8 +77,8 @@ msgstr ""
 
 #: includes/admin/class-visitors-admin.php:272
 msgid ""
-"If not selected counters will use \"today/week/month/total\" otherwise "
-"\"last days\"."
+"If not selected User counters will use \"today/week/month/total\" format "
+"otherwise \"last days\" format."
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:265
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Last week"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:222
+#: includes/core/class-um-visitors-directory.php:267
 msgid "less than one minute ago"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgid "None"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:278
-msgid "Number of counters for \"last days\""
+msgid "Number of User counters for \"last days\" format"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:46
@@ -210,15 +210,15 @@ msgstr ""
 msgid "Number of visits"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:228
+#: includes/core/class-um-visitors-directory.php:273
 msgid "one day ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:215
+#: includes/core/class-um-visitors-directory.php:260
 msgid "one hour ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:219
+#: includes/core/class-um-visitors-directory.php:264
 msgid "one minute ago"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgid "Show visits time"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:271
-msgid "Summary counters before the Directory"
+msgid "Summary of User counters before the Directory"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:215
@@ -310,16 +310,22 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:114
+#: includes/core/class-um-visitors-directory.php:116
 msgid "Visit"
 msgstr ""
 
+#: includes/core/class-um-visitors-directory.php:131
 #: includes/admin/class-visitors-admin.php:138
-msgid "Visit times"
+msgid "Visit time"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:119
+#: includes/core/class-um-visitors-directory.php:121
 msgid "Visitor"
+msgstr ""
+
+#: includes/core/class-um-visitors-directory.php:135
+#: includes/admin/class-visitors-admin.php:137
+msgid "Visitor time"
 msgstr ""
 
 #: includes/admin/class-visitors-admin.php:216
@@ -331,10 +337,6 @@ msgid ""
 "period duplicate visits are not saved as a new visit.<br />\n"
 "                                                          Disable time limit,"
 " set time to 0"
-msgstr ""
-
-#: includes/admin/class-visitors-admin.php:137
-msgid "Visitor times"
 msgstr ""
 
 #: includes/core/class-um-visitors-options.php:115
@@ -367,4 +369,5 @@ msgstr ""
 #: includes/admin/class-visitors-admin.php:287
 msgid "WP All Users columns"
 msgstr ""
+
 
