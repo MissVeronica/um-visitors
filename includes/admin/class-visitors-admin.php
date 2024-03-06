@@ -124,7 +124,7 @@ class Visitors_Admin {
                 }
             }
             ?>
-            <div><?php echo sprintf( $header, $total ); ?> </div>
+            <div><?php echo sprintf( $header, intval( $total )); ?> </div>
             <?php
             if ( $hline ) {
                 echo '<hr>';
@@ -134,8 +134,8 @@ class Visitors_Admin {
 
     public function um_members_directory_sort_fields_vv( $sort_fields ) {
 
-        $sort_fields['vv_visitor_times'] = __( 'Visitor times', 'um-visitors' );
-        $sort_fields['vv_visit_times']   = __( 'Visit times', 'um-visitors' );
+        $sort_fields['vv_visitor_times'] = __( 'Visitor time', 'um-visitors' );
+        $sort_fields['vv_visit_times']   = __( 'Visit time', 'um-visitors' );
 
         return $sort_fields;
     }
@@ -206,7 +206,7 @@ class Visitors_Admin {
                                     'label'       => __( 'User Roles', 'um-visitors' ),
                                     'description' => __( 'Select the User Roles for display of the Visits & Visitors forms in User Profiles.'),
                                     'size'        => 'medium',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_new_visit',
@@ -234,7 +234,7 @@ class Visitors_Admin {
                                                             '86400' => '24 hours'
                                                         ),
                                     'size'        => 'small',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_visitors_form_id',
@@ -243,7 +243,7 @@ class Visitors_Admin {
                                     'label'       => __( 'Visitors - Member Directory Form', 'um-visitors' ),
                                     'description' => __( 'Create a Member Directory Form for display of User Profile Visitors.', 'um-visitors' ),
                                     'size'        => 'small',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             if ( ! empty( UM()->options()->get( 'vv_visitors_form_id' ))) {
@@ -256,29 +256,29 @@ class Visitors_Admin {
                                     'label'       => __( 'Visits - Member Directory Form', 'um-visitors' ),
                                     'description' => __( 'Create a Member Directory Form for display of User Profile Visits.', 'um-visitors' ),
                                     'size'        => 'small',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_number_of_days_ago',
                                     'type'        => 'checkbox',
                                     'label'       => __( 'Display days ago in Members Directory', 'um-visitors' ),
                                     'description' => __( 'If not selected WP date format will be used.', 'um-visitors' ),
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_summary_weeks',
                                     'type'        => 'checkbox',
-                                    'label'       => __( 'Summary counters before the Directory', 'um-visitors' ),
-                                    'description' => __( 'If not selected counters will use "today/week/month/total" otherwise "last days".', 'um-visitors' ),
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'label'       => __( 'Summary of User counters before the Directory', 'um-visitors' ),
+                                    'description' => __( 'If not selected User counters will use "today/week/month/total" format otherwise "last days" format.', 'um-visitors' ),
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_summary_limit',
                                     'type'        => 'text',
-                                    'label'       => __( 'Number of counters for "last days"', 'um-visitors' ),
+                                    'label'       => __( 'Number of User counters for "last days" format', 'um-visitors' ),
                                     'description' => __( 'Enter the number of days for User counters display.', 'um-visitors' ),
                                     'size'        => 'small',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'vv_summary_weeks', '=', 1 )
                                 );
 
             $all_fields[] = array(  'id'          => 'vv_all_user_columns',
@@ -288,14 +288,14 @@ class Visitors_Admin {
                                     'description' => __( 'Select the sortable columns for Plugin\'s UM Predefined fields in WP All Users page.', 'um-visitors' ),
                                     'options'     => $this->vv_columns,
                                     'size'        => 'small',
-                                    'conditional' => array( "visitors_active", '=', 1 )
+                                    'conditional' => array( 'visitors_active', '=', 1 )
                                 );
 
             $key = ! empty( $settings['extensions']['sections'] ) ? 'visitors' : '';
             $plugin_data = get_plugin_data( plugin_visitors_file );
 
             $settings['extensions']['sections'][$key] = array(  'title'  => __( 'User Visitors & Visits', 'um-visitors' ),
-                                                                'description' => sprintf( __( 'Plugin version %s - tested with UM 2.8.3'), $plugin_data['Version'] ),
+                                                                'description' => sprintf( __( 'Plugin version %s - tested with UM 2.8.3'), esc_attr( $plugin_data['Version'] )),
                                                                 'fields' => $all_fields );
         }
 
