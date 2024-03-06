@@ -198,10 +198,10 @@ class Visitors_Shortcodes {
                     foreach( $vv_array as $key => $value ) {
                         echo '<div class="vv_combo">';
                         switch( $key ) {
-                            case 'today':   echo sprintf( $text[$key], array_pop( $value )); break;
-                            case 'week':    echo sprintf( $text[$key], array_pop( $value )); break;
-                            case 'month':   echo sprintf( $text[$key], array_pop( $value )); break;
-                            case 'total':   echo sprintf( $text[$key], $value ); break;
+                            case 'today':   echo sprintf( $text[$key], intval( array_pop( $value ))); break;
+                            case 'week':    echo sprintf( $text[$key], intval( array_pop( $value ))); break;
+                            case 'month':   echo sprintf( $text[$key], intval( array_pop( $value ))); break;
+                            case 'total':   echo sprintf( $text[$key], intval( $value )); break;
                             default: break;
                         }
                         echo '</div>';
@@ -258,7 +258,7 @@ class Visitors_Shortcodes {
                     echo '</div>';
 
                 } else {
-                    echo '<div class="vv_none">' . sprintf( __( 'No %s data', 'um-visitors' ), $attrs['key'] ) . '</div>';
+                    echo '<div class="vv_none">' . sprintf( __( 'No %s data', 'um-visitors' ), esc_attr( $attrs['key'] )) . '</div>';
                 }
             }
         }
@@ -303,7 +303,7 @@ class Visitors_Shortcodes {
                 $vv_array = um_user( str_replace( 'counter', 'combo', $vv_type ) );
 
                 echo '<div class="vv_daily">';
-                echo sprintf( __( 'Total %s', 'um-visitors' ), $vv_array['total'] );
+                echo sprintf( __( 'Total %s', 'um-visitors' ), intval( $vv_array['total'] ));
                 echo '</div>';
 
             } else {
