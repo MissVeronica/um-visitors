@@ -11,14 +11,15 @@ class Visitors_Directory{
 
     function __construct() {
 
-        add_filter( 'um_prepare_user_query_args',           array( $this, 'um_prepare_user_query_args_directories' ), 10, 2 );
-        add_filter( 'um_prepare_user_query_args',           array( $this, 'um_prepare_user_query_args_vv' ), 10, 2 );
-        add_filter( 'um_ajax_get_members_data',             array( $this, 'get_members_data_vv' ), 50, 3 );
+        add_filter( 'um_prepare_user_query_args',              array( $this, 'um_prepare_user_query_args_directories' ), 10, 2 );
+        add_filter( 'um_prepare_user_query_args',              array( $this, 'um_prepare_user_query_args_vv' ), 10, 2 );
+        add_filter( 'um_ajax_get_members_data',                array( $this, 'get_members_data_vv' ), 50, 3 );
 
-        add_action( 'um_members_after_user_name_tmpl',      array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
-        add_action( 'um_members_list_after_user_name_tmpl', array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
+        add_action( 'um_members_after_user_name_tmpl',         array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
+        add_action( 'um_members_list_after_user_name_tmpl',    array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
+        add_filter( 'um_member_directory_pre_display_sorting', array( $this, 'um_member_directory_vv_sorting' ), 10, 2 );
 
-        add_filter( 'um_whitelisted_metakeys',              array( $this, 'um_whitelisted_metakeys_vv' ), 10, 2 );
+        add_filter( 'um_whitelisted_metakeys',                 array( $this, 'um_whitelisted_metakeys_vv' ), 10, 2 );
 
         $this->date_local   = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
         $this->current_time = current_time( 'timestamp' );
@@ -90,6 +91,7 @@ class Visitors_Directory{
                     $this->vv_user_ids = $this->vv_get_user_meta( $vv_user_id, 'vv_visits' );
                     if ( isset( $this->vv_user_ids[$user_id] )) {
                         $data_array['vv_visits'] = $this->get_past_visit_time( $user_id );
+
                     }
                     break;
 
@@ -121,6 +123,22 @@ class Visitors_Directory{
         }
     }
 
+    public function um_member_directory_vv_sorting( $sorting_options, $args ) {
+
+        switch( $args['form_id'] ) {
+
+            case UM()->options()->get( 'vv_visits_form_id' ):
+                                    $sorting_options['vv_visit_times'] = __( 'Visit time', 'um-visitors' );
+                                    break;
+
+            case UM()->options()->get( 'vv_visitors_form_id' ):
+                                    $sorting_options['vv_visitor_times'] = __( 'Visitor time', 'um-visitors' );
+                                    break;
+            default: break;
+        }
+
+        return $sorting_options;
+    }
     public function um_whitelisted_metakeys_vv( $cf_metakeys, $form_data ) {
 
         $vv_forbiddens = array( 'vv_last_activity',
@@ -158,9 +176,30 @@ class Visitors_Directory{
         return $query_args;
     }
 
+    public function remove_users_hiding( $vv_array ) {
+
+        $args = array(  'fields'     => array( 'ID' ), 
+                        'meta_query' => array( 'relation'  => 'AND', 
+                                                array(  'key'     => 'hide_in_members',
+                                                        'value'   => 'a:1:{i:0;s:3:"Yes";}',
+                                                        'compare' => '=' )), 
+                    );
+
+        $hide_users = get_users( $args );
+
+        foreach( $hide_users as $hide_user ) {
+
+            if ( array_key_exists( $hide_user->ID, $vv_array )) {
+                unset( $vv_array[$hide_user->ID] );
+            }
+        }
+        return $vv_array;
+    }
+
     public function prepare_sort_filter( $type, $vv_user_id ) {
 
         $this->vv_user_ids = $this->vv_get_user_meta( $vv_user_id, $type );
+        $this->vv_user_ids = $this->remove_users_hiding( $this->vv_user_ids );
         add_filter( 'um_prepare_user_results_array', array( $this, 'um_prepare_user_results_array_vv_sorting' ), 10, 2 );
     }
 
@@ -228,7 +267,7 @@ class Visitors_Directory{
             $string = ( $value == 1 ) ? __( 'one day ago', 'um-visitors' ) : __( '%d days ago', 'um-visitors' );
         }
 
-        return sprintf( $string, $value );
+        return sprintf( $string, intval( $value ));
     }
 
 }
