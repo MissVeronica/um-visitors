@@ -7,8 +7,8 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 3. Visitors - Member Directory Form - Create a Member Directory Form for display of User Profile Visitors.
 4. Visits - Member Directory Form - Create a Member Directory Form for display of User Profile Visits.
 5. Display days ago in Members Directory - If not selected WP date format will be used.
-6. Summary counters before the Directory - If not selected counters will use "today/week/month/total" otherwise "last days".
-7. Number of counters for "last days" - Enter the number of days for User counters display.
+6. Summary of User counters before the Directory - If not selected User counters will use "today/week/month/total" format otherwise "last days" format.
+7. Number of User counters for "last days" format - Enter the number of days for User counters display.
 8. WP All Users columns - Select the sortable columns for Plugin's UM Predefined fields in WP All Users page.
 
 ## UM Settings -> Appearance -> Profile Menu
@@ -50,6 +50,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 1. Version 1.1.0 Code improvements
 2. Version 1.2.0 Reduced info in UM Dashboard. New shortcode [vv_dashboard]
 3. Version 1.3.0 CSS classes, Dashboard header, New counter options for Directory, Who can see Vists/Visitors Tab?
+4. Version 1.4.0 Code improvements, Members Directory hiding Users account option tested.
 
 ## Installation
 1. Install by downloading the plugin ZIP file and install as a new Plugin, which you upload in WordPress -> Plugins -> Add New -> Upload Plugin.
