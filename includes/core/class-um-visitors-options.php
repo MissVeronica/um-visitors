@@ -61,7 +61,7 @@ class Visitors_User_Options{
         $form_id = UM()->options()->get( 'vv_visitors_form_id' );
 
 		$max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visitors' )) );
-        $header = sprintf( __( 'My last %s of total %d visitors', 'um-visitors' ), $max_users, (array)count( um_user( 'vv_visitors' )) );
+        $header = sprintf( __( 'My last %s of total %d visitors', 'um-visitors' ), intval( $max_users ), (array)count( um_user( 'vv_visitors' )) );
 
         if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
             $vv = new Visitors_Shortcodes();
@@ -80,7 +80,7 @@ class Visitors_User_Options{
         $form_id = UM()->options()->get( 'vv_visits_form_id' );
 
         $max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visits' )) );
-        $header = sprintf( __( 'My last %s of total %d visits', 'um-visitors' ), $max_users, count( (array)um_user( 'vv_visits' )) );
+        $header = sprintf( __( 'My last %s of total %d visits', 'um-visitors' ), intval( $max_users ), count( (array)um_user( 'vv_visits' )) );
 
         if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
             $vv = new Visitors_Shortcodes();
