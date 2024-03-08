@@ -19,7 +19,7 @@ class Visitors_User_Options{
         $this->current_time = current_time( 'timestamp' );
     }
 
-    public function directory_um_shortcode( $form_id, $header ) {
+    public function directory_um_shortcode( $form_id ) {
 
         global $current_user;
 
@@ -60,38 +60,34 @@ class Visitors_User_Options{
 
         $form_id = UM()->options()->get( 'vv_visitors_form_id' );
 
-		$max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visitors' )) );
-        $header = sprintf( __( 'My last %s of total %d visitors', 'um-visitors' ), intval( $max_users ), (array)count( um_user( 'vv_visitors' )) );
+        $header = __( 'My latest visitors', 'um-visitors' );
 
+        $vv = new Visitors_Shortcodes();
         if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
-            $vv = new Visitors_Shortcodes();
             echo $vv->vv_show_daily( 'vv_visitors_counter', array(), $header );
 
         } else {
-            $vv = new Visitors_Shortcodes();
             echo $vv->vv_show_total_visitors_shortcode( array(), $header );
         }
 
-        $this->directory_um_shortcode( $form_id, $header );
+        $this->directory_um_shortcode( $form_id );
     }
 
     public function profile_content_visits_default( $args ) {
 
         $form_id = UM()->options()->get( 'vv_visits_form_id' );
 
-        $max_users = $this->get_form_max_users( $form_id, count( (array)um_user( 'vv_visits' )) );
-        $header = sprintf( __( 'My last %s of total %d visits', 'um-visitors' ), intval( $max_users ), count( (array)um_user( 'vv_visits' )) );
+        $header = __( 'My latest visits', 'um-visitors' );
 
+        $vv = new Visitors_Shortcodes();
         if ( UM()->options()->get( 'vv_summary_weeks' ) == 1 ) {
-            $vv = new Visitors_Shortcodes();
             echo $vv->vv_show_daily( 'vv_visits_counter', array(), $header );
 
         } else {
-            $vv = new Visitors_Shortcodes();
             echo $vv->vv_show_total_visits_shortcode( array(), $header );
         }
 
-        $this->directory_um_shortcode( $form_id, $header );
+        $this->directory_um_shortcode( $form_id );
     }
 
     public function format_date( $time ) {
@@ -164,4 +160,3 @@ class Visitors_User_Options{
 }
 
 new Visitors_User_Options();
-
