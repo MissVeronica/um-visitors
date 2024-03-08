@@ -13,12 +13,13 @@ class Visitors_Directory{
 
         add_filter( 'um_prepare_user_query_args',              array( $this, 'um_prepare_user_query_args_directories' ), 10, 2 );
         add_filter( 'um_prepare_user_query_args',              array( $this, 'um_prepare_user_query_args_vv' ), 10, 2 );
-        add_filter( 'um_ajax_get_members_data',                array( $this, 'get_members_data_vv' ), 50, 3 );
+        add_filter( 'um_ajax_get_members_data',                array( $this, 'ajax_get_members_data_vv' ), 50, 3 );
 
         add_action( 'um_members_after_user_name_tmpl',         array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
         add_action( 'um_members_list_after_user_name_tmpl',    array( $this, 'um_members_after_user_name_tmpl_vv' ), 10, 1 );
         add_filter( 'um_member_directory_pre_display_sorting', array( $this, 'um_member_directory_vv_sorting' ), 10, 2 );
 
+        add_action( 'deleted_user',                            array( $this, 'wp_deleted_user_update_vv' ), 10, 1 );
         add_filter( 'um_whitelisted_metakeys',                 array( $this, 'um_whitelisted_metakeys_vv' ), 10, 2 );
 
         $this->date_local   = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
@@ -77,7 +78,7 @@ class Visitors_Directory{
         }
     }
 
-    public function get_members_data_vv( $data_array, $user_id, $directory_data ) {
+    public function ajax_get_members_data_vv( $data_array, $user_id, $directory_data ) {
 
         global $current_user;
 
@@ -91,7 +92,6 @@ class Visitors_Directory{
                     $this->vv_user_ids = $this->vv_get_user_meta( $vv_user_id, 'vv_visits' );
                     if ( isset( $this->vv_user_ids[$user_id] )) {
                         $data_array['vv_visits'] = $this->get_past_visit_time( $user_id );
-
                     }
                     break;
 
@@ -107,7 +107,7 @@ class Visitors_Directory{
             }
         }
 
-		return $data_array;
+        return $data_array;
 	}
 
     public function um_members_after_user_name_tmpl_vv( $args ) {
@@ -164,10 +164,14 @@ class Visitors_Directory{
 
             case UM()->options()->get( 'vv_visits_form_id' ):
                  $query_args['include'] = $this->get_all_user_ids( 'vv_visits', $directory_data['form_id'], true );
+                 $query_args['include'] = $this->remove_users_hiding( $query_args['include'], false );
+                 $query_args['include'] = $this->remove_deleted_users( $query_args['include'], false );
                  break;
 
             case UM()->options()->get( 'vv_visitors_form_id' ):
                  $query_args['include'] = $this->get_all_user_ids( 'vv_visitors', $directory_data['form_id'], true );
+                 $query_args['include'] = $this->remove_users_hiding( $query_args['include'], false );
+                 $query_args['include'] = $this->remove_deleted_users( $query_args['include'], false );
                  break;
 
             default: break;
@@ -176,23 +180,93 @@ class Visitors_Directory{
         return $query_args;
     }
 
-    public function remove_users_hiding( $vv_array ) {
+    public function wp_deleted_user_update_vv( $user_id ) {
 
-        $args = array(  'fields'     => array( 'ID' ), 
-                        'meta_query' => array( 'relation'  => 'AND', 
-                                                array(  'key'     => 'hide_in_members',
-                                                        'value'   => 'a:1:{i:0;s:3:"Yes";}',
-                                                        'compare' => '=' )), 
-                    );
+        $vv_deleted_users_ids = get_transient( 'vv_deleted_users_ids' );
 
-        $hide_users = get_users( $args );
+        if ( $vv_deleted_users_ids ) {
 
-        foreach( $hide_users as $hide_user ) {
+            $vv_deleted_users_ids[$user_id] = true;
+            set_transient( 'vv_deleted_users_ids', $vv_deleted_users_ids, WEEK_IN_SECONDS );
+        }
+    }
 
-            if ( array_key_exists( $hide_user->ID, $vv_array )) {
-                unset( $vv_array[$hide_user->ID] );
+    public function remove_deleted_users( $vv_array, $key_search = true ) {
+
+        $vv_deleted_users_ids = get_transient( 'vv_deleted_users_ids' );
+        if ( ! $vv_deleted_users_ids ) {
+
+            $args = array( 'fields'  => array( 'ID' ),
+                           'orderby' => array( 'ID' => 'DESC')
+                        );
+
+            $active_users = get_users( $args );
+            $last_user_id = $active_users[0]->ID;
+
+            $vv_deleted_users_ids = array_fill( 1, $last_user_id, true );
+            foreach( $active_users as $active_user ) {
+                unset( $vv_deleted_users_ids[$active_user->ID] );
+            }
+
+            set_transient( 'vv_deleted_users_ids', $vv_deleted_users_ids, WEEK_IN_SECONDS );
+        }
+
+        foreach( $vv_deleted_users_ids as $user_id => $value ) {
+
+            switch( $key_search ) {
+
+                case 1:
+                        if ( array_key_exists( $user_id, $vv_array )) {
+                            unset( $vv_array[$user_id] );
+                        }
+                        break;
+
+                case 0:
+                        if ( in_array( $user_id, $vv_array )) {
+                            $key = array_search( $user_id, $vv_array );
+                            unset( $vv_array[$key] );
+                        }
+                        break;
+
+                default:break;
             }
         }
+
+        return $vv_array;
+    }
+
+    public function remove_users_hiding( $vv_array, $key_search = true ) {
+
+        $args = array(  'fields'     => array( 'ID' ),
+                        'meta_query' => array( 'relation'  => 'AND',
+                                                array(  'key'     => 'hide_in_members',
+                                                        'value'   => 'a:1:{i:0;s:3:"Yes";}',
+                                                        'compare' => '=' )),
+                    );
+
+        $hidden_users = get_users( $args );
+
+        foreach( $hidden_users as $hidden_user ) {
+
+            switch( $key_search ) {
+            
+                case 1:
+                        if ( array_key_exists( $hidden_user->ID, $vv_array )) {
+                            unset( $vv_array[$hidden_user->ID] );
+                        }
+                        break;
+
+                case 0:
+                        if ( in_array( $hidden_user->ID, $vv_array )) {
+                            $key = array_search( $hidden_user->ID, $vv_array );
+                            unset( $vv_array[$key] );
+                        }
+                        break;
+
+                default:break;
+            }
+        }
+
         return $vv_array;
     }
 
@@ -200,6 +274,8 @@ class Visitors_Directory{
 
         $this->vv_user_ids = $this->vv_get_user_meta( $vv_user_id, $type );
         $this->vv_user_ids = $this->remove_users_hiding( $this->vv_user_ids );
+        $this->vv_user_ids = $this->remove_deleted_users( $this->vv_user_ids );
+
         add_filter( 'um_prepare_user_results_array', array( $this, 'um_prepare_user_results_array_vv_sorting' ), 10, 2 );
     }
 
