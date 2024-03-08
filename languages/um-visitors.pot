@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Member - User Visitors and Visits\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 13:01+0000\n"
+"POT-Creation-Date: 2024-03-08 15:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.4.3\n"
 "X-Domain: um-visitors"
 
-#: includes/core/class-um-visitors-directory.php:273
+#: includes/core/class-um-visitors-directory.php:343
 msgid "%d days ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:260
+#: includes/core/class-um-visitors-directory.php:330
 msgid "%d hours ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:264
+#: includes/core/class-um-visitors-directory.php:334
 msgid "%d minutes ago"
 msgstr ""
 
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Last week"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:267
+#: includes/core/class-um-visitors-directory.php:337
 msgid "less than one minute ago"
 msgstr ""
 
@@ -155,14 +155,12 @@ msgstr ""
 msgid "Miss Veronica"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:64
-#, php-format
-msgid "My last %s of total %d visitors"
+#: includes/core/class-um-visitors-options.php:63
+msgid "My latest visitors"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:83
-#, php-format
-msgid "My last %s of total %d visits"
+#: includes/core/class-um-visitors-options.php:80
+msgid "My latest visits"
 msgstr ""
 
 #: includes/visitors-shortcodes.php:261
@@ -210,15 +208,15 @@ msgstr ""
 msgid "Number of visits"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:273
+#: includes/core/class-um-visitors-directory.php:343
 msgid "one day ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:260
+#: includes/core/class-um-visitors-directory.php:330
 msgid "one hour ago"
 msgstr ""
 
-#: includes/core/class-um-visitors-directory.php:264
+#: includes/core/class-um-visitors-directory.php:334
 msgid "one minute ago"
 msgstr ""
 
@@ -339,7 +337,7 @@ msgid ""
 " set time to 0"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:115
+#: includes/core/class-um-visitors-options.php:111
 #: includes/admin/class-visitors-modal.php:45
 msgid "Visitors"
 msgstr ""
@@ -348,7 +346,7 @@ msgstr ""
 msgid "Visitors - Member Directory Form"
 msgstr ""
 
-#: includes/core/class-um-visitors-options.php:125
+#: includes/core/class-um-visitors-options.php:121
 #: includes/admin/class-visitors-modal.php:36
 msgid "Visits"
 msgstr ""
