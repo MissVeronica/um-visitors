@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Ultimate Member - User Visitors and Visits
  * Description:     Extension to Ultimate Member for the display of User Profile Visitors and User Profile Visits.
- * Version:         1.4.0
+ * Version:         1.5.0
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v2 or later
@@ -10,7 +10,7 @@
  * Author URI:      https://github.com/MissVeronica
  * Text Domain:     um-visitors
  * Domain Path:     /languages
- * UM version:      2.8.3
+ * UM version:      2.8.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
