@@ -51,6 +51,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 2. Version 1.2.0 Reduced info in UM Dashboard. New shortcode [vv_dashboard]
 3. Version 1.3.0 CSS classes, Dashboard header, New counter options for Directory, Who can see Vists/Visitors Tab?
 4. Version 1.4.0 Code improvements, Members Directory hiding Users account option tested.
+5. Version 1.5.0 Removal of deleted users from Directory
 
 ## Installation
 1. Install by downloading the plugin ZIP file and install as a new Plugin, which you upload in WordPress -> Plugins -> Add New -> Upload Plugin.
