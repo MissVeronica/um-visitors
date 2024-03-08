@@ -102,10 +102,13 @@ class UM_Vistors_Modal {
         <h2><?php echo sprintf( $this->heading[$vv_type], esc_attr( $user->user_login )); ?></h2>
         <?php
         $vv = new Visitors_Shortcodes();
+
         echo $vv->vv_show_activity_shortcode();
         echo '<hr>';
+
         echo $vv->vv_show_daily( $vv_type . '_counter', array( 'limit' => 7 ), __( 'Daily ( 7 last days )', 'um-visitors' ) );
         echo '<hr>';
+
         switch( $vv_type ) {
             case 'vv_visits':   echo $vv->vv_show_total_visits_shortcode(); break;
             case 'vv_visitors': echo $vv->vv_show_total_visitors_shortcode(); break;
@@ -121,6 +124,8 @@ class UM_Vistors_Modal {
                     <th style="text-align:left;"><?php   _e( 'Date',     'um-visitors' ); ?></th>
                 </tr>
                 <?php
+                $vv = new Visitors_Directory();
+                $vv_array = $vv->remove_deleted_users( $vv_array );
                 foreach( $vv_array as $uid => $time ) { 
                     $user = get_user_by( 'id', $uid );
                     $date = date_i18n( $this->date_local, $time );
