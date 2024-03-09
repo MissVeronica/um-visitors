@@ -110,8 +110,8 @@ class UM_Vistors_Modal {
         echo '<hr>';
 
         switch( $vv_type ) {
-            case 'vv_visits':   echo $vv->vv_show_total_visits_shortcode(); break;
-            case 'vv_visitors': echo $vv->vv_show_total_visitors_shortcode(); break;
+            case 'vv_visits':   echo $vv->vv_show_total_visits_shortcode( array(), 'Visits' ); break;
+            case 'vv_visitors': echo $vv->vv_show_total_visitors_shortcode( array(), 'Visitors' ); break;
         }
         echo '<hr>';
 
