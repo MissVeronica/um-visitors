@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Ultimate Member - User Visitors and Visits
  * Description:     Extension to Ultimate Member for the display of User Profile Visitors and User Profile Visits.
- * Version:         1.5.0
+ * Version:         1.6.0
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v2 or later
