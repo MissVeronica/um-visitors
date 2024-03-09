@@ -69,9 +69,8 @@ class Visitors_Shortcodes {
 
         ob_start();
 
-        if( ! empty( $content )) {
-            echo '<h4 class="vv_header">' . esc_attr( $content ) . '</h4>';
-        }
+        $this->print_shortcode_header( $content );
+
         $this->show_dashboard_metabox_combo( __( 'Profile Page Viewers',    'um-visitors' ), 'vv_visitors_combo', true );
         $this->show_dashboard_metabox_combo( __( 'Visits to Profile Pages', 'um-visitors' ), 'vv_visits_combo',   true );
 
@@ -155,6 +154,36 @@ class Visitors_Shortcodes {
         return $this->vv_show_total_visitors( 'vv_visitors_combo', $vv_array, $attrs, $content );
     }
 
+    public function print_shortcode_header( $content ) {
+
+        if( ! empty( $content )) {
+            echo '<h4 class="vv_header">' . esc_attr( $content ) . '</h4>';
+        }
+    }
+
+    public function print_shortcode_line( $text, $value ) {
+
+        ?>
+        <tr class="vv_combo, vv_daily">
+            <td style="border:none !important;">
+            <?php echo esc_attr( $text ); ?>
+            </td><td style="border:none !important; text-align:right;">
+            <?php echo esc_attr( $value ); ?>
+            </td>
+        </tr>
+        <?php
+    }
+
+    public function print_no_shortcode_data( $vv_type ) {
+
+        echo '<div class="vv_combo">';
+        switch( $vv_type ) {
+            case 'vv_visitors_combo': echo __( 'No visitors data', 'um-visitors' ); break;
+            case 'vv_visits_combo':   echo __( 'No visits data', 'um-visitors' ); break;
+        }
+        echo '</div>';
+    }
+
     public function vv_show_total_visitors( $vv_type, $vv_array, $attrs, $content, $validate = true ) {
 
         ob_start();
@@ -162,31 +191,29 @@ class Visitors_Shortcodes {
 
             if ( is_array( $vv_array ) && ! empty( $vv_array )) {
 
-                if( ! empty( $content )) {
-                    echo '<h4 class="vv_header">' . esc_attr( $content ) . '</h4>';
-                }
+                $this->print_shortcode_header( $content );
 
                 switch( $vv_type ) {
                         case 'vv_visitors_combo':
                             $text = array(
-                                            'today' => __( 'Visitors today %s',      'vv_visitors' ),
-                                            'week'  => __( 'Visitors this week %s',  'vv_visitors' ),
-                                            'month' => __( 'Visitors this month %s', 'vv_visitors' ),
-                                            'total' => __( 'Visitors total %s',      'vv_visitors' ),
+                                            'today' => __( 'Visitors today',      'vv_visitors' ),
+                                            'week'  => __( 'Visitors this week',  'vv_visitors' ),
+                                            'month' => __( 'Visitors this month', 'vv_visitors' ),
+                                            'total' => __( 'Visitors total',      'vv_visitors' ),
                                         );
                             break;
 
                         case 'vv_visits_combo':
                             $text = array(  
-                                            'today' => __( 'Visits today %s',      'vv_visitors' ),
-                                            'week'  => __( 'Visits this week %s',  'vv_visitors' ),
-                                            'month' => __( 'Visits this month %s', 'vv_visitors' ),
-                                            'total' => __( 'Visits total %s',      'vv_visitors' ),
+                                            'today' => __( 'Visits today',      'vv_visitors' ),
+                                            'week'  => __( 'Visits this week',  'vv_visitors' ),
+                                            'month' => __( 'Visits this month', 'vv_visitors' ),
+                                            'total' => __( 'Visits total',      'vv_visitors' ),
                                         );
                             break;
 
                         default: 
-                            $text = array(); 
+                            $text = array();
                             break;
                 }
 
@@ -195,21 +222,23 @@ class Visitors_Shortcodes {
                 }
 
                 if ( ! empty( $text )) {
+
+                    echo '<table style="width: 150px !important; border:none !important;";>';
                     foreach( $vv_array as $key => $value ) {
-                        echo '<div class="vv_combo">';
+
                         switch( $key ) {
-                            case 'today':   echo sprintf( $text[$key], intval( array_pop( $value ))); break;
-                            case 'week':    echo sprintf( $text[$key], intval( array_pop( $value ))); break;
-                            case 'month':   echo sprintf( $text[$key], intval( array_pop( $value ))); break;
-                            case 'total':   echo sprintf( $text[$key], intval( $value )); break;
+                            case 'today':
+                            case 'week':
+                            case 'month':   $this->print_shortcode_line( $text[$key], intval( array_pop( $value ))); break;
+                            case 'total':   $this->print_shortcode_line( $text[$key], intval( $value )); break;
                             default: break;
                         }
-                        echo '</div>';
                     }
+                    echo '</table>';
                 }
 
             } else {
-                echo '<div class="vv_combo">' . __( 'No combo data', 'um-visitors' ) . '</div>';
+                $this->print_no_shortcode_data( $vv_type );
             }
         }
 
@@ -236,7 +265,7 @@ class Visitors_Shortcodes {
                 $vv_array = um_user( $vv_type );
                 if ( is_array( $vv_array ) && array_key_exists( $attrs['key'], $vv_array )) {
 
-                    echo '<div class="vv_vombo">';
+                    echo '<div class="vv_combo">';
                     if ( $attrs['key'] != 'total' ) {
                         $vv_array = $this->validate_daily( $vv_array, $vv_type );
                         $value = array_pop( $vv_array[$attrs['key']] );
@@ -258,7 +287,7 @@ class Visitors_Shortcodes {
                     echo '</div>';
 
                 } else {
-                    echo '<div class="vv_none">' . sprintf( __( 'No %s data', 'um-visitors' ), esc_attr( $attrs['key'] )) . '</div>';
+                    $this->print_no_shortcode_data( $vv_type );
                 }
             }
         }
@@ -290,21 +319,18 @@ class Visitors_Shortcodes {
                     $vv_array = array_slice( $vv_array, 0, absint( $attrs['limit'] ));
                 }
 
-                if( ! empty( $content )) {
-                    echo '<h4 class="vv_header">' . esc_attr( $content ) . '</h4>';
-                }
+                $this->print_shortcode_header( $content );
+
+                echo '<table style="width: 150px !important; border:none !important;">';
 
                 foreach( $vv_array as $key => $value ) {
-                    echo '<div class="vv_daily">';
-                    echo esc_attr( date_i18n( get_option( 'date_format' ) . ' ', strtotime( $key ))) . esc_attr( $value );
-                    echo '</div>';
+                    $this->print_shortcode_line( date_i18n( get_option( 'date_format' ), strtotime( $key )), intval( $value ));
                 }
 
                 $vv_array = um_user( str_replace( 'counter', 'combo', $vv_type ) );
+                $this->print_shortcode_line( __( 'Total', 'um-visitors' ), intval( $vv_array['total'] ));
 
-                echo '<div class="vv_daily">';
-                echo sprintf( __( 'Total %s', 'um-visitors' ), intval( $vv_array['total'] ));
-                echo '</div>';
+                echo '</table>';
 
             } else {
                 echo '<div class="vv_none">' . __( 'No daily data', 'um-visitors' ) . '</div>';
