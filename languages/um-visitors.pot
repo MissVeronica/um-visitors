@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Member - User Visitors and Visits\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-08 15:45+0000\n"
+"POT-Creation-Date: 2024-03-09 15:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -163,20 +163,11 @@ msgstr ""
 msgid "My latest visits"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:261
-#, php-format
-msgid "No %s data"
-msgstr ""
-
 #: includes/admin/class-visitors-modal.php:88
 msgid "No access"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:212
-msgid "No combo data"
-msgstr ""
-
-#: includes/visitors-shortcodes.php:310
+#: includes/visitors-shortcodes.php:336
 msgid "No daily data"
 msgstr ""
 
@@ -184,15 +175,17 @@ msgstr ""
 msgid "No Form defined"
 msgstr ""
 
-#: includes/admin/class-visitors-modal.php:142
+#: includes/visitors-shortcodes.php:181
+#: includes/admin/class-visitors-modal.php:144
 msgid "No visitors data"
 msgstr ""
 
-#: includes/admin/class-visitors-modal.php:141
+#: includes/visitors-shortcodes.php:182
+#: includes/admin/class-visitors-modal.php:143
 msgid "No visits data"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:134
+#: includes/visitors-shortcodes.php:133
 msgid "None"
 msgstr ""
 
@@ -220,7 +213,7 @@ msgstr ""
 msgid "one minute ago"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:75
+#: includes/visitors-shortcodes.php:74
 msgid "Profile Page Viewers"
 msgstr ""
 
@@ -256,16 +249,15 @@ msgstr ""
 msgid "Time limit new entries"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:130
+#: includes/visitors-shortcodes.php:129
 msgid "Top Users"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:306
-#, php-format
-msgid "Total %s"
+#: includes/visitors-shortcodes.php:331
+msgid "Total"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:126
+#: includes/visitors-shortcodes.php:125
 msgid "Totals"
 msgstr ""
 
@@ -355,7 +347,7 @@ msgstr ""
 msgid "Visits - Member Directory Form"
 msgstr ""
 
-#: includes/visitors-shortcodes.php:76
+#: includes/visitors-shortcodes.php:75
 msgid "Visits to Profile Pages"
 msgstr ""
 
