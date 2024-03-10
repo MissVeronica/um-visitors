@@ -50,7 +50,7 @@ class Visitors_Admin {
 
     public function load_toplevel_page_visits_visitors() {
 
-        add_meta_box(   'um-metaboxes-sidebox-vv',
+        add_meta_box(   'um-metaboxes-sidebox-3',
                         __( 'User Visitors & Visits', 'um-visitors' ),
                         array( $this, 'toplevel_page_visits_visitors' ),
                         'toplevel_page_ultimatemember',
