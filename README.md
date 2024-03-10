@@ -53,6 +53,7 @@ Extension to Ultimate Member for the display of User Profile Visitors and User P
 4. Version 1.4.0 Code improvements, Members Directory hiding Users account option tested.
 5. Version 1.5.0 Removal of deleted users from Directory
 6. Version 1.6.0 Shortcode formatting
+7. Version 1.6.1 UM Dashboard column 3
 
 ## Installation
 1. Install by downloading the plugin ZIP file and install as a new Plugin, which you upload in WordPress -> Plugins -> Add New -> Upload Plugin.
